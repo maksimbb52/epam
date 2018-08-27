@@ -22,16 +22,34 @@ public class Solution {
         }
     }
 
-    public static void copy(String existsFile, String newFile) {
+    public static void copy(String existsFile, String Dir) {
         File file = new File(existsFile);
+        Path p = Paths.get(existsFile);
         try {
             if (file.exists() && file.isFile()) {
-                Files.copy(Paths.get(existsFile), Paths.get(newFile), StandardCopyOption.COPY_ATTRIBUTES);
+                Files.copy(Paths.get(existsFile), Paths.get(Dir + "\\" + p.getFileName()), StandardCopyOption.COPY_ATTRIBUTES);
                 return;
             }
             System.out.println("File not exists.");
         } catch (IOException | SecurityException e) {
             System.out.println("Incorrect one of paths.");
+        }
+    }
+
+    public static void createDir(String path) {
+        Path p = Paths.get(path);
+        Path temp = p.getRoot();
+        for (Path pa: p) {
+            temp = Paths.get(temp.toString(), pa.toString());
+            System.out.println(temp.toString());
+            if (temp.toFile().exists() && !temp.toFile().isDirectory()) {
+                temp.toFile().mkdir();
+                continue;
+            }
+            if (!temp.toFile().exists()) {
+                temp.toFile().mkdir();
+                continue;
+            }
         }
     }
 
