@@ -34,6 +34,13 @@ public class Main {
                         System.out.println("Incorrect arguments.");
                     }
                     break;
+                case "createDir":
+                    try {
+                        Solution.createDir(command[1]);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Incorrect arguments.");
+                    }
+                    break;
                 case "rename":
                     try {
                         Solution.rename(command[1], command[2]);
@@ -47,23 +54,30 @@ public class Main {
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Incorrect arguments.");
                     }
+                    break;
                 case "viewFilesCurrentDir":
                     try {
                         Solution.viewFilesCurrentDir(command[1]);
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Incorrect arguments.");
                     }
+                    break;
                 case "viewFilesDeep":
                     try {
                         Solution.viewFilesDeep(command[1]);
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Incorrect arguments.");
                     }
+                    break;
                 case "help":
                     System.out.println("rename <full path> <full new name>\n" +
                             "copy <file> <dir to paste>\ncreateFile <path>\nviewAllCurrentDir <dir>\n" +
                             "viewviewFilesCurrentDir <dir>\nviewFilesDeep <dir>\nhelp");
+                    break;
+                default:
+                    System.out.println("Incorrect command.");
+                    break;
             }
-        } while (choice.toLowerCase().equals("exit"));
+        } while (!choice.toLowerCase().equals("exit"));
     }
 }
