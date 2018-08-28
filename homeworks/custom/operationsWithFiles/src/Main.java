@@ -4,14 +4,11 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) {
-        Solution.copy("d:\\3.txt", "d:\\1.txt");
-        Solution.createFile("d:\\1\\2\\3\\4\\4dffgh.txt");
-        Solution.viewAllCurrentDir("d:\\");
-        Solution.viewFilesCurrentDir("d:\\");
-        Solution.viewFilesDeep("d:\\1");
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String choice = "exit";
+        System.out.println("rename <path> <new name>\n" +
+                "copy <file> <dir to paste>\ncreateFile <path>\nviewAllCurrentDir <dir>\n" +
+                "viewFilesCurrentDir <dir>\nviewFilesDeep <dir>\nhelp\nexit");
         do {
             try {
                 choice = reader.readLine();
@@ -70,9 +67,9 @@ public class Main {
                     }
                     break;
                 case "help":
-                    System.out.println("rename <full path> <full new name>\n" +
+                    System.out.println("rename <path> <new name>\n" +
                             "copy <file> <dir to paste>\ncreateFile <path>\nviewAllCurrentDir <dir>\n" +
-                            "viewviewFilesCurrentDir <dir>\nviewFilesDeep <dir>\nhelp");
+                            "viewFilesCurrentDir <dir>\nviewFilesDeep <dir>\nhelp\nexit");
                     break;
                 default:
                     System.out.println("Incorrect command.");
