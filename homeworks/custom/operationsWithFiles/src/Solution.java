@@ -1,9 +1,12 @@
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.nio.file.*;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class Solution {
     public static void rename(String before, String after) {
@@ -92,6 +95,41 @@ public class Solution {
                     .forEach(System.out::println);
         } catch (IOException | NullPointerException e) {
             System.out.println("Incorrect path.");
+        }
+    }
+
+    public static void toZip(String zipPath, String contentsPath) throws IOException {
+        final Path zip = Paths.get(zipPath);
+        Path contents = Paths.get(contentsPath);
+        if (Files.exists(zip)) {
+            throw new FileAlreadyExistsException(zip.toString());
+        }
+        if (!Files.exists(contents)) {
+            throw new FileNotFoundException("The location to zip must exist");
+        }
+        final Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
+        final URI uri = URI.create("jar:file:/" + zip.toString().replace("\\", "/"));
+        try (final FileSystem zipFileSystem = FileSystems.newFileSystem(uri, env);
+             final Stream<Path> files = Files.walk(contents)) {
+            final Path root = zipFileSystem.getPath("/");
+            files.forEach(file -> {
+                try {
+                    copyToZip(root, contents, file);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+    }
+
+
+    private static void copyToZip(final Path root, final Path contents, final Path file) throws IOException {
+        final Path to = root.resolve(contents.relativize(file).toString());
+        if (Files.isDirectory(file)) {
+            Files.createDirectories(to);
+        } else {
+            Files.copy(file, to);
         }
     }
 
