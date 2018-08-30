@@ -75,6 +75,15 @@ public class Main {
                         System.out.println("Incorrect path.");
                     }
                     break;
+                case "unzip":
+                    try {
+                        Solution.unzip(command[1], command[2]);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Incorrect arguments.");
+                    } /*catch (IOException e) {
+                        System.out.println("Incorrect path.");
+                    }*/
+                    break;
                 case "help":
                     System.out.println("rename <path> <new name>\n" +
                             "copy <file> <dir to paste>\ncreateFile <path>\nviewAllCurrentDir <dir>\n" +
